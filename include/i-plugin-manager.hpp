@@ -28,6 +28,8 @@ MIDF_DECL_FUNC(bool, plugin_manager, register_function,
     midf::function<std::string, std::string> /*the function*/,
     std::string /*function description*/);
 
+MIDF_DECL_FUNC(bool, plugin_manager, unregister_plugin, std::string /*name*/);
+
 // interface to interract with the plugins
 MIDF_DECL_FUNC(std::string, plugin_manager, get_plugin_info, std::string /*plugin name*/);
 MIDF_DECL_FUNC(std::string, plugin_manager, get_function_info,
@@ -38,3 +40,7 @@ using PluginFunction = midf::function<std::string, std::string>; // fix preproce
 MIDF_DECL_FUNC(PluginFunction, plugin_manager, get_function,
     std::string /*plugin name*/,
     std::string /*function name*/);
+
+MIDF_DECL_FUNC(bool, plugin_manager, function_exists,
+    std::string /*plugin name*/,
+    std::string /*function name*/)
