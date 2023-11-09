@@ -5,12 +5,13 @@
 #include <string>
 
 using PluginFunction = midf::function<midf::JsonAsRet, midf::JsonAsParam>; // fix preprocessing error
+using PluginsList = std::vector<std::string>;
 
 MIDF_DECL_PORT(plugin_manager, 25001);
 
 // interface for managing plugins
-MIDF_DECL_FUNC_NO_ARGS(std::vector<std::string>, plugin_manager, get_plugins_list);
-MIDF_DECL_FUNC_NO_ARGS(std::vector<std::string>, plugin_manager, get_installed_plugins_list);
+MIDF_DECL_FUNC_NO_ARGS(PluginsList, plugin_manager, get_plugins_list);
+MIDF_DECL_FUNC_NO_ARGS(PluginsList, plugin_manager, get_installed_plugins_list); // installed plugins
 
 MIDF_DECL_FUNC(bool, plugin_manager, install, std::string);
 MIDF_DECL_FUNC(bool, plugin_manager, uninstall, std::string);
@@ -29,6 +30,9 @@ MIDF_DECL_FUNC(bool, plugin_manager, register_function,
     std::string /*function name*/,
     PluginFunction /*the function*/,
     std::string /*function description*/);
+
+// registered plugins
+MIDF_DECL_FUNC_NO_ARGS(PluginsList, plugin_manager, get_registered_plugins_list);
 
 MIDF_DECL_FUNC(bool, plugin_manager, unregister_plugin, std::string /*name*/);
 
