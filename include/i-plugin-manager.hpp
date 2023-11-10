@@ -29,7 +29,7 @@ MIDF_DECL_FUNC(bool, plugin_manager, register_function,
     std::string /*plugin name*/,
     std::string /*function name*/,
     PluginFunction /*the function*/,
-    std::string /*function description*/);
+    midf::JsonAsVar /*function description*/);
 
 // registered plugins
 MIDF_DECL_FUNC_NO_ARGS(PluginsList, plugin_manager, get_registered_plugins_list);
