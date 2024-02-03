@@ -3,6 +3,8 @@
 #include <midf.hpp>
 
 #include <string>
+#include <functional>
+#include <iostream>
 
 using PluginFunction = midf::function<midf::JsonAsRet, midf::JsonAsParam>; // fix preprocessing error
 using PluginsList = std::vector<std::string>;
@@ -50,3 +52,25 @@ MIDF_DECL_FUNC(PluginFunction, plugin_manager, get_function,
 MIDF_DECL_FUNC(bool, plugin_manager, function_exists,
     std::string /*plugin name*/,
     std::string /*function name*/)
+
+namespace plugin_manager {
+    std::string global_plugin_name;
+
+    // signal handler
+    void handle_signal(int signal) {
+        std::cout << "Signal (" << signal << ") received. Unregistering plugin \'" << global_plugin_name << "\'" << std::endl;
+        plugin_manager::unregister_plugin(global_plugin_name);
+        exit(0);
+    }
+
+    void init_plugin(std::string plugin_name) {
+        global_plugin_name = plugin_name;
+
+        plugin_manager::register_plugin(plugin_name);
+
+        signal(SIGINT, handle_signal);
+        signal(SIGTERM, handle_signal);
+
+        std::cout << "Plugin \'" << plugin_name << "\' is initiated in plugin_manager" << std::endl;
+    }
+}
