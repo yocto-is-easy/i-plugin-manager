@@ -56,7 +56,6 @@ MIDF_DECL_FUNC(bool, plugin_manager, function_exists,
 namespace plugin_manager {
     std::string global_plugin_name;
 
-    // signal handler
     void handle_signal(int signal) {
         std::cout << "Signal (" << signal << ") received. Unregistering plugin \'" << global_plugin_name << "\'" << std::endl;
         plugin_manager::unregister_plugin(global_plugin_name);
